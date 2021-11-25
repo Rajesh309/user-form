@@ -1,0 +1,20 @@
+Q - What are Microtasks ? 
+A - It is a function executed after the function or class which created that function exits in the call stack.
+    Microtasks are usually created by Promises and await. After the promise is either resolved or rejected, its follow up
+    handlers(.then/.catch/.finally) has to be executed, these handlers become the microtasks.
+
+Q - What is a Microtask queue ? 
+A - Microtask queue is a series of asynchronous functions/handlers which are waiting to be executed, and they will be waiting in a place called 
+    microtask queue which is also known as "promise jobs". The event loops picks up each function/handlers in this queue and serve to callstack 
+    after once callstack is empty.
+
+Q - What is the role of microtasks in Promises.
+A - Promises always executes asynchronously in javascript, that means program execution wont be halted until it gets result from Promise. 
+    The function execution continues without waiting for promise to complete. Promises has handlers such as .then/.catch/.finally which are to be
+    executed after the promise is either resolved/rejected. After once the promise is resolved/rejected then follow up handlers has to executed, which are
+    stored in this microtask queue. Especially it helps in ensuring order of execution when promises are called conditionally.
+
+Q - How it is different from callback queue?
+A - Callback queue gets ordinary callback functions from 3rd party API's for eg, setTimeOut. Whereas Microtask queue gets callback functions
+    coming through Promises and await. Microtask queue has higher priority compared to callback queue in terms of picking up of functions from respective 
+    queue from Event loop to push it to call stack.
