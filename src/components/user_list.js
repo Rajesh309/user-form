@@ -34,7 +34,7 @@ export const UserList = () => {
                             const {name,age,email,phoneNumber} = eachUser;
                             return(
                                 <TableRow key = {name}>
-                                    <TableCell component="th" scope="row">{index}</TableCell>  
+                                    <TableCell component="th" scope="row">{index + 1}</TableCell>  
                                     <TableCell>{name}</TableCell>  
                                     <TableCell>{age}</TableCell>  
                                     <TableCell>{email}</TableCell>  

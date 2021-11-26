@@ -21,22 +21,26 @@ export const UserForm = () => {
     const FIELDS = [{
         name : "name",
         label : "Name",
-        id : "name"
+        id : "name",
+        required : true
     },
     {
         name : "age",
         label : "Age",
-        id : "age"
+        id : "age",
+        required : false
     },
     {
         name : "email",
         label : "Email",
-        id : "email"
+        id : "email",
+        required : true
     },
     {
         name : "phoneNumber",
         label : "Phone Number",
-        id : "phoneNumber"
+        id : "phoneNumber",
+        required : true
     },
 ];
 
@@ -50,7 +54,18 @@ export const UserForm = () => {
     }
 
     const isValidForm = () => {
-        return Object.values(error).every(eachError => eachError === "")
+        
+       let allRequiredFilled = FIELDS?.every(eachField => {
+        if(eachField.required) {
+            return values[eachField.name]
+        }
+        else return true
+       }) 
+        return allRequiredFilled && Object.values(error).every(eachError => eachError === "")
+    }
+
+    const isFormFilled = () => {
+       return Object.values(values).some(ev => ev !== "")
     }
 
     const handleSubmit = (e) => {
@@ -68,7 +83,7 @@ export const UserForm = () => {
 
     }
 
-    const handleClear = () => {
+    const handleReset = () => {
         setValues(defaultValues)
         setError(defaultValues)
     }
@@ -116,12 +131,12 @@ export const UserForm = () => {
         },
         {
             label : "RESET",
-            disabled : false,
-            action : handleClear,
+            disabled : !isFormFilled(),
+            action : handleReset,
             color : "warning"
         }
-    ]
-
+    ];
+    
     return (
         <div className = {classes.formContainer}>
             <div className = {classes.formContainerHeader}>
@@ -130,7 +145,7 @@ export const UserForm = () => {
             <div className = {classes.formContainer1}>
                 {
                 FIELDS.map((eachField) => {
-                    const {name,label,id} = eachField;
+                    const {name,label,id,required} = eachField;
                     return (
                         <>
                         <div className = {classes.formField}>
@@ -140,6 +155,7 @@ export const UserForm = () => {
                                 onChange={handleInputValue}
                                 name={name}
                                 label={label}
+                                required = {required}
                                 fullWidth={true}
                                 value = {values[name]}
                                 error = {error[name]}
